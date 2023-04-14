@@ -1,15 +1,15 @@
 pipeline {
     agent any
     environment {
-        DOCKER_REGISTRY = "kemiye01"
-        DOCKER_IMAGE_NAME = "flask-app"
-        DOCKER_IMAGE_TAG = "v4"
+        DOCKER_REGISTRY = "chibuzo199"
+        DOCKER_IMAGE_NAME = "Flaskapp"
+        DOCKER_IMAGE_TAG = "M1"
     }
     stages {
         stage('git clone') {
             steps {
                 script {
-                    git branch: 'main', url: 'https://github.com/kemiye01/flask-app.git'
+                    git branch: 'main', url: 'https://github.com/Chibuzo199/Flaskapp.git'
                 }
             }
         }
@@ -17,7 +17,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                    cd /var/lib/jenkins/workspace/flask-app
+                    cd /var/lib/jenkins/workspace/Flaskapp
                     sudo docker build -t ${DOCKER_REGISTRY}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} .
                     """
                 }
@@ -26,7 +26,7 @@ pipeline {
         stage('Docker Login') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'docker-login', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                    withCredentials([usernamePassword(credentialsId: 'Docker', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
                         sh "echo '${DOCKER_PASSWORD}' | sudo docker login -u '${DOCKER_USERNAME}' --password-stdin"
                         echo 'Successfully logged into Docker Hub'
                     }
@@ -45,7 +45,7 @@ pipeline {
         stage('Deploy Docker image with Ansible') {
             steps {
                 script {
-                   ansiblePlaybook credentialsId: 'ssh', disableHostKeyChecking: true, installation: 'ansible', inventory: 'host.ini', playbook: 'play.yml'
+                   ansiblePlaybook credentialsId: 'ssh-docker', disableHostKeyChecking: true, installation: 'ansible', inventory: 'host.ini', playbook: 'play.yml'
                 }
             }
         }
