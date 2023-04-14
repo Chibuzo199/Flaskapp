@@ -2,8 +2,8 @@ pipeline {
     agent any
     environment {
         DOCKER_REGISTRY = "chibuzo199"
-        DOCKER_IMAGE_NAME = "Flaskapp"
-        DOCKER_IMAGE_TAG = "M1"
+        DOCKER_IMAGE_NAME = "flaskapp"
+        DOCKER_IMAGE_TAG = "m1"
     }
     stages {
         stage('git clone') {

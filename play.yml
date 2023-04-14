@@ -5,7 +5,7 @@
   
   vars:
     ansible_become: yes
-    docker_image_name: chibuzo199/Flaskapp:M1
+    docker_image_name: chibuzo199/flaskapp:m1
     docker_container_name: faskapp
     # python_interpreter: /usr/bin/python3
     container_default_behavior: compatibility
@@ -44,19 +44,19 @@
 
     - name: Pull Docker image
       docker_image:
-        name: chibuzo199/Flaskapp:M1
+        name: chibuzo199/flaskapp:m1
         source: pull
 
     # - name: Pull Docker Image
     #   become: yes
     #   docker_image:
-    #     name: chibuzo199/Flaskapp:M1
+    #     name: chibuzo199/Flaskapp:m1
     #     state: present
 
     - name: Start Docker Container
       docker_container:
-        name: Flaskapp
-        image: chibuzo199/Flaskapp:M1
+        name: flaskapp
+        image: chibuzo199/flaskapp:m1
         ports:
           - 5000:5000
         state: started
